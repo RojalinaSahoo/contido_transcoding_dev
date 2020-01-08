@@ -133,8 +133,6 @@ def add_user(request):
     lastname= request.POST.get('lastname',None)
     project_title= request.POST.get('project_title',None)
     groupname= request.POST.get('groupname',None)
-    print(username)
-
 
     if username and password:
         try:

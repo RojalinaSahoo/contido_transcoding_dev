@@ -1982,3 +1982,11 @@ TypeError: Object of type ObjectId is not JSON serializable
 2020-01-08 21:26:18,107 /home/nithin/projects/Contido_Transcode/transcode/views.py changed, reloading.
 2020-01-08 21:27:15,735 /home/nithin/projects/Contido_Transcode/transcode/views.py changed, reloading.
 2020-01-08 21:27:33,810 /home/nithin/projects/Contido_Transcode/Contido_Transcode/views.py changed, reloading.
+2020-01-08 21:43:20,928 /home/nithin/projects/Contido_Transcode/transcode/views.py changed, reloading.
+2020-01-08 21:43:23,624 /home/nithin/projects/Contido_Transcode/transcode/urls.py changed, reloading.
+2020-01-08 21:43:27,242 /home/nithin/projects/Contido_Transcode/Contido_Transcode/views.py changed, reloading.
+2020-01-08 21:43:29,737 /home/nithin/projects/Contido_Transcode/utils/decorators.py changed, reloading.
+2020-01-08 21:44:29,390 /home/nithin/projects/Contido_Transcode/transcode/views.py changed, reloading.
+2020-01-08 21:44:40,773 /home/nithin/projects/Contido_Transcode/transcode/views.py changed, reloading.
+2020-01-08 21:44:50,383 /home/nithin/projects/Contido_Transcode/Contido_Transcode/views.py changed, reloading.
+2020-01-08 21:44:55,233 /home/nithin/projects/Contido_Transcode/Contido_Transcode/views.py changed, reloading.

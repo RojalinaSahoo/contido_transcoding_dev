@@ -372,8 +372,7 @@ def transcode_job_update_status(request):
             transcode_data.update(job_starttime=start_datetime)
             transcode_data.update(job_endtime=end_datetime)
             transcode_data.update(modified_at=modified_at)
-        print(transcode_data.job_id)
-        print(transcode_data.id)
+        
         data = {'job_id':transcode_data.job_id, 'transcode_id': str(transcode_data.id)}
     except Exception as e:
         print(e)
