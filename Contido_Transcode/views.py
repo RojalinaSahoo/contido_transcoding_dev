@@ -514,6 +514,8 @@ def login_api_refresh(request):
     expirytime2=int(expiry_time.strftime('%s'))
     data_expirytime2= datetime.datetime.fromtimestamp(expirytime2).strftime("%Y-%m-%d %H:%M:%S")
     print("Expiry time",data_expirytime2)
+    print("new_token_created:",new_token_created)
+    print("new_expire_time:",new_expire_time)
     # user.api_token_recreate == False
     #if current_time > new_expire_time:
     #    return Response({"Error":"Token is Expired"},status="400")

@@ -358,7 +358,8 @@ def transcode_job_update_status(request):
     except Exception as e:
         print(e)
         return Response({'message': "Invalid parameter",'data':None,'status':401})
-    error = params.get("error",None)    
+    error = params.get("error",None)
+    mediainfo = params.get("mediainfo",None)    
     try:
         start_datetime = datetime.datetime.fromtimestamp(job_starttime/ 1000.0).strftime("%Y-%m-%dT%H:%M:%SZ")
         start_date= datetime.datetime.strptime(start_datetime, "%Y-%m-%dT%H:%M:%SZ")
@@ -367,7 +368,8 @@ def transcode_job_update_status(request):
         elif job_endtime != None: 
             end_datetime= datetime.datetime.fromtimestamp(job_endtime/ 1000.0).strftime("%Y-%m-%dT%H:%M:%SZ")
             end_date= datetime.datetime.strptime(end_datetime, "%Y-%m-%dT%H:%M:%SZ")
-    except:
+    except ValueError as ve:
+        print('ValueError Raised:', ve)
         return Response({"message":"Invalid datetime format",'data':None,'status':402})
     modified_at = datetime.datetime.now()
 
@@ -380,6 +382,7 @@ def transcode_job_update_status(request):
             transcode_data.update(job_endtime=end_date)
             transcode_data.update(modified_at=modified_at)
             transcode_data.update(error=error)
+            transcode_data.update(mediainfo=mediainfo)
         
         data = {'job_id':transcode_data.job_id, 'transcode_id': str(transcode_data.id),'error':transcode_data.error}
     except Exception as e:
