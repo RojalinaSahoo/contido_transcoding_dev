@@ -566,15 +566,15 @@ def is_token_required(function):
     def wrap(request, *args, **kwargs):
         token = request.META.get('HTTP_AUTHORIZATION',None)
         try:
-            print("token used:",token.split()[1])
+            #print("token used:",token.split()[1])
             split_token= token.split()[1]
             token_data=UserInfo.objects.filter(transcode_token=split_token)
             for user_token in token_data:
-                print("expiry time:",int(user_token.api_expired_token_at.strftime('%s')))
+                #print("expiry time:",int(user_token.api_expired_token_at.strftime('%s')))
                 expiry_time =int(user_token.api_expired_token_at.strftime('%s'))
             current_time = int(datetime.datetime.now().timestamp())
             data_current_time=datetime.datetime.fromtimestamp(current_time).strftime("%Y-%m-%d %H:%M:%S")
-            print("current time:",current_time)
+            #print("current time:",current_time)
             if not token_data:
                 return Response({"message":'token not matched','data':None,'status':400})
             elif current_time >= expiry_time:

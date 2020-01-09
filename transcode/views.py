@@ -188,7 +188,7 @@ def transcode_data(request):
     except Exception as e:
         print(e)
         return Response({'message': "Invalid parameter",'data':None,'status':401})
-
+    error = params.get('error',None)
     try:
         transcode_data= Transcode()
         current_time = int(datetime.datetime.now().timestamp())
@@ -224,6 +224,7 @@ def transcode_data(request):
         #transcode_data.originalMessage = params
         transcode_data.audio_house_format = audio_house_format
         transcode_data.mediainfo = mediainfo
+        transcode_data.error = error
         transcode_data.save()
         job_status = transcode_data.job_status
         job_id = transcode_data.job_id
@@ -353,14 +354,21 @@ def transcode_job_update_status(request):
         transcode_db_id = params.get("transcode_db_id",None)
         job_starttime = params.get("job_start_time",None)
         job_endtime = params.get("job_end_time",None)
+        print('job_endtime:',job_endtime)
     except Exception as e:
         print(e)
-        return Response({'message': "Invalid parameter",'data':None,'status':402})
+        return Response({'message': "Invalid parameter",'data':None,'status':401})
+    error = params.get("error",None)    
     try:
-        start_datetime = datetime.datetime.strptime(job_starttime, "%Y-%m-%dT%H:%M:%S")
-        end_datetime= datetime.datetime.strptime(job_endtime, "%Y-%m-%dT%H:%M:%S")
+        start_datetime = datetime.datetime.fromtimestamp(job_starttime/ 1000.0).strftime("%Y-%m-%dT%H:%M:%SZ")
+        start_date= datetime.datetime.strptime(start_datetime, "%Y-%m-%dT%H:%M:%SZ")
+        if job_endtime == None:
+            end_date = datetime.datetime.now().replace(day=1, month=1, year=1970, hour=0, minute=0, second=0, microsecond=0)
+        elif job_endtime != None: 
+            end_datetime= datetime.datetime.fromtimestamp(job_endtime/ 1000.0).strftime("%Y-%m-%dT%H:%M:%SZ")
+            end_date= datetime.datetime.strptime(end_datetime, "%Y-%m-%dT%H:%M:%SZ")
     except:
-        return Response({"message":"Invalid datetime format",'data':None,'status':403})
+        return Response({"message":"Invalid datetime format",'data':None,'status':402})
     modified_at = datetime.datetime.now()
 
     try:
@@ -368,12 +376,12 @@ def transcode_job_update_status(request):
 
         for transcode_data in transcode:
             transcode_data.update(job_status=job_status)
-            #transcode_data.update(job_id=job_id)
-            transcode_data.update(job_starttime=start_datetime)
-            transcode_data.update(job_endtime=end_datetime)
+            transcode_data.update(job_starttime=start_date)
+            transcode_data.update(job_endtime=end_date)
             transcode_data.update(modified_at=modified_at)
+            transcode_data.update(error=error)
         
-        data = {'job_id':transcode_data.job_id, 'transcode_id': str(transcode_data.id)}
+        data = {'job_id':transcode_data.job_id, 'transcode_id': str(transcode_data.id),'error':transcode_data.error}
     except Exception as e:
         print(e)
         return Response({'message': "Transcode id doesn't exists",'data':None,'status':403})

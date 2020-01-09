@@ -36,7 +36,7 @@ class Transcode(Document):
 
     upload_from = StringField(default='')
     upload_type =StringField(default='')
-    error = StringField(default=None)
+    error = StringField(default='')
     #data = DictField(default=None)
 
     asset_type = StringField(default='')
@@ -59,7 +59,7 @@ class Transcode(Document):
     response_formatter = ListField(default=[])    
 
     job_starttime = DateTimeField(default=timezone.now().replace(microsecond=0))
-    job_endtime = DateTimeField(default=timezone.now().replace(microsecond=0))
+    job_endtime = DateTimeField(default=timezone.now().replace(day=1, month=1, year=1970, hour=0, minute=0, second=0, microsecond=0))
     creation = DateTimeField(default=timezone.now().replace(microsecond=0))
     modified_at = DateTimeField(default=timezone.now().replace(microsecond=0))
 
