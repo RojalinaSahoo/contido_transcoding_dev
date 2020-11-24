@@ -1,0 +1,32 @@
+version: "3.2"
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: nginx.Dockerfile
+    restart: always
+    ports:
+      - "90:80"
+    hostname: "gateway"
+
+
+  djangoApp:
+    build:
+      context: ./Django
+      dockerfile: DjangoApp.Dockerfile
+    image: django:v1
+    hostname: "djangoApp"
+    environment:
+      - POST_URL="http://api.dyn.stg.contido.io/api/transcode/job/status/"
+      - TRANSCODE_USER_DOMAIN="desynova.com,gmail.com"
+    env_file: ./Django/.env
+
+
+
+  instance_manager:
+        build:
+          context: ./instance_manager
+          dockerfile:  machine.Dockerfile
+        env_file:
+            - $HOME/.secrets/.env
